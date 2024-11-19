@@ -1,3 +1,4 @@
+import 'package:expensetracker/consts/assetsurl.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,7 +9,11 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Column(
-          children: [Container()],
+          children: [
+            Container(
+              child: Image.asset(Assetsurl.igsplashimg),
+            )
+          ],
         ),
       ),
     );

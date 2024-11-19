@@ -1,4 +1,5 @@
 import 'package:expensetracker/firebase_options.dart';
+import 'package:expensetracker/views/homescreen.dart';
 import 'package:expensetracker/views/splashscreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +26,11 @@ class Expense_Tracker extends StatelessWidget {
         path: "/",
         name: Routes.splash.name,
         builder: (context, state) => SplashScreen(),
+      ),
+      GoRoute(
+        path: "/home",
+        name: Routes.home.name,
+        builder: (context, state) => Homescreen(),
       ),
     ],
   );

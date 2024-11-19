@@ -14,7 +14,13 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              child: Image.asset(Assetsurl.igsplashimg),
+              height: 450.h,
+              width: 800.w,
+              decoration: BoxDecoration(),
+              child: Image.asset(
+                Assetsurl.igsplashimg,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(
               height: 250.h,

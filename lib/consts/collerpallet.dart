@@ -8,8 +8,8 @@ class Appcolor {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter);
 
-  static Gradient floatingButtonGradient = RadialGradient(
-    colors: [Color(0xff7DD4FB), Color(0xff007AFF)],
-    radius: BorderSide.strokeAlignCenter,
-  );
+  static Gradient floatingButtonGradient = LinearGradient(
+      colors: [Color(0xff7DD4F0), Color(0xff007AFF)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight);
 }

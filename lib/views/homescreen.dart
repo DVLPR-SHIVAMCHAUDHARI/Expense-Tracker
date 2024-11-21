@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:expensetracker/consts/assetsurl.dart';
+import 'package:expensetracker/consts/bottomsheet.dart';
 import 'package:expensetracker/consts/collerpallet.dart';
 import 'package:expensetracker/consts/typography.dart';
 import 'package:expensetracker/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+GlobalKey<FormState> formkey = GlobalKey();
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -11,13 +16,32 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          "Expense Tracker",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        shape: CircleBorder(),
+        elevation: 0,
+        onPressed: () {
+          addExpensesform(context);
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 74.h,
+              height: 14.h,
             ),
             //profile
 
@@ -47,6 +71,13 @@ class Homescreen extends StatelessWidget {
             SizedBox(
               height: 16.h,
             ),
+            // ListView.builder(
+            //   // itemCount: expenses.length,
+            //   itemBuilder: (context, index) {
+            //     final expense = expenses[index];
+            //     return ListTile()
+            //   },
+            // )
           ],
         ),
       ),

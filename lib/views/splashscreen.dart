@@ -21,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             Container(
               height: 450.h,
               width: 800.w,
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Image.asset(
                 Assetsurl.igsplashimg,
                 fit: BoxFit.cover,

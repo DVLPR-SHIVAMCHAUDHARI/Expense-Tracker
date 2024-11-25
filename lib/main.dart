@@ -1,3 +1,4 @@
+import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/firebase_options.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:expensetracker/views/splashscreen.dart';
@@ -6,6 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 enum Routes { splash, home }
 
@@ -17,6 +20,8 @@ void main() async {
   runApp(Expense_Tracker());
 }
 
+Logger logger = Logger();
+
 class Expense_Tracker extends StatelessWidget {
   Expense_Tracker({super.key});
 
@@ -25,12 +30,12 @@ class Expense_Tracker extends StatelessWidget {
       GoRoute(
         path: "/",
         name: Routes.splash.name,
-        builder: (context, state) => SplashScreen(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: "/home",
         name: Routes.home.name,
-        builder: (context, state) => Homescreen(),
+        builder: (context, state) => const Homescreen(),
       ),
     ],
   );
@@ -38,10 +43,13 @@ class Expense_Tracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(390, 844),
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
+      designSize: const Size(390, 844),
+      child: MultiProvider(
+        providers: [ChangeNotifierProvider(create: (_) => Expensecontroller())],
+        child: MaterialApp.router(
+          routerConfig: router,
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

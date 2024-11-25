@@ -4,39 +4,53 @@ import 'package:expensetracker/consts/assetsurl.dart';
 import 'package:expensetracker/consts/bottomsheet.dart';
 import 'package:expensetracker/consts/collerpallet.dart';
 import 'package:expensetracker/consts/typography.dart';
+import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 GlobalKey<FormState> formkey = GlobalKey();
 
-class Homescreen extends StatelessWidget {
+class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
+
+  @override
+  State<Homescreen> createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
+  @override
+  void initState() {
+    Expensecontroller().fetchExpense();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(
+        title: const Text(
           "Expense Tracker",
           style: TextStyle(color: Colors.white),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         elevation: 0,
         onPressed: () {
           addExpensesform(context);
         },
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -53,7 +67,7 @@ class Homescreen extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: Typo.interregular,
                       fontSize: 17.sp,
-                      color: Color(0xff8E8E93)),
+                      color: const Color(0xff8E8E93)),
                 ),
                 CircleAvatar(
                   radius: 20.r,
@@ -71,13 +85,20 @@ class Homescreen extends StatelessWidget {
             SizedBox(
               height: 16.h,
             ),
-            // ListView.builder(
-            //   // itemCount: expenses.length,
-            //   itemBuilder: (context, index) {
-            //     final expense = expenses[index];
-            //     return ListTile()
-            //   },
-            // )
+            Consumer<Expensecontroller>(builder: (context, controller, _) {
+              return Builder(builder: (context) {
+                return Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.expenses.length,
+                    itemBuilder: (context, index) => ListTile(
+                      title: Text("${controller.expenses[index].expense}"),
+                      leading: Text("${controller.expenses[index].amount}"),
+                    ),
+                  ),
+                );
+              });
+            })
           ],
         ),
       ),

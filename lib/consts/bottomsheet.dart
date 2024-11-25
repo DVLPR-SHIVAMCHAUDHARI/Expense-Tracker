@@ -1,10 +1,11 @@
+import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 addExpensesform(context) {
-  TextEditingController _amountField = TextEditingController();
-  TextEditingController _expenseField = TextEditingController();
+  TextEditingController amountField = TextEditingController();
+  TextEditingController expenseField = TextEditingController();
 
   showModalBottomSheet(
     isScrollControlled: true,
@@ -32,17 +33,32 @@ addExpensesform(context) {
               SizedBox(
                 height: 6.h,
               ),
-              Divider(),
+              const Divider(),
               SizedBox(
                 height: 16.h,
               ),
-              TextField(
-                controller: _expenseField,
-                decoration: InputDecoration(labelText: 'Expense name'),
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "This field is required.";
+                  }
+                  return null;
+                },
+                controller: expenseField,
+                decoration: const InputDecoration(labelText: 'Expense name'),
               ),
-              TextField(
-                controller: _amountField,
-                decoration: InputDecoration(labelText: 'Amount'),
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "This field is required.";
+                  }
+                  if (double.tryParse(value) == null) {
+                    return "Please enter a valid number.";
+                  }
+                  return null;
+                },
+                controller: amountField,
+                decoration: const InputDecoration(labelText: 'Amount'),
                 keyboardType: TextInputType.number,
               ),
               SizedBox(
@@ -50,11 +66,19 @@ addExpensesform(context) {
               ),
               FilledButton(
                 onPressed: () {
+                  if (formkey.currentState!.validate()) {
+                    Expensecontroller().addExpense(
+                        expense: expenseField.text, amount: amountField.text);
+                    // Form is valid
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Form is valid")),
+                    );
+                  }
                   FocusScope.of(context).unfocus();
                 },
-                child: Text("Add Expense"),
-                style: ButtonStyle(
+                style: const ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+                child: Text("Add Expense"),
               ),
               SizedBox(
                 height: 10.h,

@@ -92,31 +92,42 @@ class _HomescreenState extends State<Homescreen> {
               height: 16.h,
             ),
             Container(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 15),
               height: 110.h,
               width: 343.w,
               decoration: BoxDecoration(
                 color: Colors.blue.shade400,
                 borderRadius: BorderRadius.circular(24.r),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: 20.h,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Monthly Budget",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: Typo.interregular,
+                            fontSize: 15.sp),
+                      ),
+                      Text(
+                        "Rs 25,520",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: Typo.interbold,
+                            fontSize: 34.sp),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Monthly Budget",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: Typo.interregular,
-                        fontSize: 15.sp),
-                  ),
-                  Text(
-                    "Rs 25,520",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: Typo.interbold,
-                        fontSize: 34.sp),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Icon(
+                      Icons.edit_note_rounded,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),

@@ -12,7 +12,7 @@ class Loginpage extends StatelessWidget {
         children: [
           TextButton(
               onPressed: () {
-                GoRouter.of(context).go(Routes.home.name);
+                GoRouter.of(context).goNamed(Routes.home.name);
               },
               child: Text("Login"))
         ],

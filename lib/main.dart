@@ -34,7 +34,7 @@ class Expense_Tracker extends StatelessWidget {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: "/",
+        path: "/login",
         name: Routes.login.name,
         builder: (context, state) => Loginpage(),
       ),

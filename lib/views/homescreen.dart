@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expensetracker/consts/assetsurl.dart';
 import 'package:expensetracker/consts/bottomsheet.dart';
 import 'package:expensetracker/consts/collerpallet.dart';
+import 'package:expensetracker/consts/datetime.dart';
 import 'package:expensetracker/consts/typography.dart';
 import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/main.dart';
@@ -94,6 +96,8 @@ class _HomescreenState extends State<Homescreen> {
                     itemBuilder: (context, index) => ListTile(
                       title: Text("${controller.expenses[index].expense}"),
                       leading: Text("${controller.expenses[index].amount}"),
+                      trailing: Text(
+                          "${dateTime(controller.expenses[index].expenseAdded!)}"),
                     ),
                   ),
                 );

@@ -54,11 +54,12 @@ class _HomescreenState extends State<Homescreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 14.h,
             ),
+
             //profile
 
             Row(
@@ -80,13 +81,47 @@ class _HomescreenState extends State<Homescreen> {
             SizedBox(
               height: 8.h,
             ),
-            Text(
-              " Home",
-              style: TextStyle(fontSize: 32.sp, fontFamily: Typo.interbold),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                " Home",
+                style: TextStyle(fontSize: 32.sp, fontFamily: Typo.interbold),
+              ),
             ),
             SizedBox(
               height: 16.h,
             ),
+            Container(
+              height: 110.h,
+              width: 343.w,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade400,
+                borderRadius: BorderRadius.circular(24.r),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    "Monthly Budget",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: Typo.interregular,
+                        fontSize: 15.sp),
+                  ),
+                  Text(
+                    "Rs 25,520",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: Typo.interbold,
+                        fontSize: 34.sp),
+                  ),
+                ],
+              ),
+            ),
+
             Consumer<Expensecontroller>(builder: (context, controller, _) {
               return Builder(builder: (context) {
                 return Expanded(

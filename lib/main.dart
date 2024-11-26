@@ -1,5 +1,6 @@
 import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/firebase_options.dart';
+import 'package:expensetracker/views/auth/loginPage.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:expensetracker/views/splashscreen.dart';
 
@@ -10,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-enum Routes { splash, home }
+enum Routes { splash, home, login }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,11 @@ class Expense_Tracker extends StatelessWidget {
         path: "/",
         name: Routes.splash.name,
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: "/",
+        name: Routes.login.name,
+        builder: (context, state) => Loginpage(),
       ),
       GoRoute(
         path: "/home",

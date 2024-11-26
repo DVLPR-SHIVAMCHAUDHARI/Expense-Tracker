@@ -56,7 +56,7 @@ class SplashScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed(Routes.home.name);
+                  GoRouter.of(context).goNamed(Routes.login.name);
                 },
                 child: Text(
                   "Get Started",

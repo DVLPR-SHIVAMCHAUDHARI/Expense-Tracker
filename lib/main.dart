@@ -1,6 +1,9 @@
+import 'package:expensetracker/controllers/authCcontroller.dart';
 import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/firebase_options.dart';
+import 'package:expensetracker/views/auth/forgetPass.dart';
 import 'package:expensetracker/views/auth/loginPage.dart';
+import 'package:expensetracker/views/auth/sign_up_screen.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:expensetracker/views/splashscreen.dart';
 
@@ -11,8 +14,12 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-enum Routes { splash, home, login }
+enum Routes { splash, home, login, signup, forgotpass }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+BuildContext get appContext => navigatorKey.currentState!.context;
+
+Logger logger = Logger();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -21,12 +28,11 @@ void main() async {
   runApp(Expense_Tracker());
 }
 
-Logger logger = Logger();
-
 class Expense_Tracker extends StatelessWidget {
   Expense_Tracker({super.key});
 
   GoRouter router = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: "/",
@@ -34,10 +40,21 @@ class Expense_Tracker extends StatelessWidget {
         builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
-        path: "/login",
-        name: Routes.login.name,
-        builder: (context, state) => Loginpage(),
-      ),
+          path: "/login",
+          name: Routes.login.name,
+          builder: (context, state) => SignInScreen(),
+          routes: [
+            GoRoute(
+              path: "forgetpass",
+              name: Routes.forgotpass.name,
+              builder: (context, state) => Forgotpassword(),
+            ),
+            GoRoute(
+              path: 'signup',
+              name: Routes.signup.name,
+              builder: (context, state) => SignUpScreen(),
+            ),
+          ]),
       GoRoute(
         path: "/home",
         name: Routes.home.name,
@@ -51,7 +68,10 @@ class Expense_Tracker extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       child: MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => Expensecontroller())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => Expensecontroller()),
+          ChangeNotifierProvider(create: (_) => AuthController()),
+        ],
         child: MaterialApp.router(
           routerConfig: router,
           debugShowCheckedModeBanner: false,

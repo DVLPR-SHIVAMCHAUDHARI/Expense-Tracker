@@ -10,6 +10,7 @@ import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 GlobalKey<FormState> formkey = GlobalKey();
@@ -72,9 +73,14 @@ class _HomescreenState extends State<Homescreen> {
                       fontSize: 17.sp,
                       color: const Color(0xff8E8E93)),
                 ),
-                CircleAvatar(
-                  radius: 20.r,
-                  child: Image.asset(Assetsurl.igprofile),
+                GestureDetector(
+                  onTap: () {
+                    GoRouter.of(appContext).goNamed(Routes.profile.name);
+                  },
+                  child: CircleAvatar(
+                    radius: 20.r,
+                    child: Image.asset(Assetsurl.igprofile),
+                  ),
                 )
               ],
             ),

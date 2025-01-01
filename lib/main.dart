@@ -5,6 +5,7 @@ import 'package:expensetracker/views/auth/forgetPass.dart';
 import 'package:expensetracker/views/auth/loginPage.dart';
 import 'package:expensetracker/views/auth/sign_up_screen.dart';
 import 'package:expensetracker/views/homescreen.dart';
+import 'package:expensetracker/views/profilePage.dart';
 import 'package:expensetracker/views/splashscreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -14,7 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-enum Routes { splash, home, login, signup, forgotpass }
+enum Routes { splash, home, login, signup, forgotpass, profile }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 BuildContext get appContext => navigatorKey.currentState!.context;
@@ -42,7 +43,8 @@ class Expense_Tracker extends StatelessWidget {
       GoRoute(
           path: "/login",
           name: Routes.login.name,
-          builder: (context, state) => SignInScreen(),
+          builder: (context, state) =>
+              AuthController().isLogin ? Homescreen() : const SignInScreen(),
           routes: [
             GoRoute(
               path: "forgetpass",
@@ -52,14 +54,20 @@ class Expense_Tracker extends StatelessWidget {
             GoRoute(
               path: 'signup',
               name: Routes.signup.name,
-              builder: (context, state) => SignUpScreen(),
+              builder: (context, state) => const SignUpScreen(),
             ),
           ]),
       GoRoute(
-        path: "/home",
-        name: Routes.home.name,
-        builder: (context, state) => const Homescreen(),
-      ),
+          path: "/home",
+          name: Routes.home.name,
+          builder: (context, state) => const Homescreen(),
+          routes: [
+            GoRoute(
+              path: "profile",
+              name: Routes.profile.name,
+              builder: (context, state) => const Profilepage(),
+            )
+          ]),
     ],
   );
 

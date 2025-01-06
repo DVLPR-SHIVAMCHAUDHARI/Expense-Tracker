@@ -2,6 +2,7 @@ import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 addExpensesform(context) {
   TextEditingController amountField = TextEditingController();
@@ -69,9 +70,10 @@ addExpensesform(context) {
                   if (formkey.currentState!.validate()) {
                     Expensecontroller().addExpense(
                         expense: expenseField.text, amount: amountField.text);
+                    GoRouter.of(context).pop();
                     // Form is valid
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Form is valid")),
+                      const SnackBar(content: Text("Expense Added")),
                     );
                   }
                   FocusScope.of(context).unfocus();

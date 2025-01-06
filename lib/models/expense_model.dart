@@ -1,17 +1,21 @@
-class Expense {
+class ExpenseDataModel {
   String? amount;
   String? expense;
   int? expenseAdded;
+  String? uid;
+  int? budget;
 
-  Expense({this.amount, this.expense, this.expenseAdded});
+  ExpenseDataModel(
+      {this.amount, this.expense, this.expenseAdded, this.uid, this.budget});
 
   // Create an instance from JSON
-  factory Expense.fromJson(Map<String, dynamic> json) {
-    return Expense(
-      amount: json['amount'],
-      expense: json['expense'],
-      expenseAdded: json['expenseAdded'],
-    );
+  factory ExpenseDataModel.fromJson(Map<String, dynamic> json) {
+    return ExpenseDataModel(
+        amount: json['amount'],
+        expense: json['expense'],
+        expenseAdded: json['expenseAdded'],
+        budget: json['budget'],
+        uid: json['uid']);
   }
 
   // Convert an instance to JSON
@@ -20,6 +24,8 @@ class Expense {
       'amount': amount,
       'expense': expense,
       'expenseAdded': expenseAdded,
+      'uid': uid,
+      'budget': budget
     };
   }
 }

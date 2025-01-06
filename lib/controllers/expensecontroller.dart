@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:expensetracker/consts/dialogbox.dart';
+import 'package:expensetracker/controllers/authCcontroller.dart';
 import 'package:expensetracker/main.dart';
 import 'package:expensetracker/models/expense_model.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,30 +13,55 @@ class Expensecontroller extends ChangeNotifier {
   Expensecontroller.internal();
   factory Expensecontroller() => instance;
 
-  List<Expense> expenses = [];
+  List<ExpenseDataModel> expenses = [];
 
   addExpense({expense, amount}) async {
     await FirebaseFirestore.instance.collection('expenses').add({
+      'uid': AuthController().uid,
       'expense': expense,
       'amount': amount,
       'expenseAdded': DateTime.now().millisecondsSinceEpoch,
     });
+
     notifyListeners();
   }
 
   fetchExpense() async {
     FirebaseFirestore.instance
         .collection('expenses')
+        .where('uid', isEqualTo: AuthController().uid)
         .orderBy('expenseAdded', descending: true)
         .snapshots()
         .listen((snapshot) {
       expenses.clear();
       for (var doc in snapshot.docs) {
         logger.d(doc);
-        Expense model = Expense.fromJson(doc.data());
+        ExpenseDataModel model = ExpenseDataModel.fromJson(doc.data());
 
         expenses.add(model);
         log(expenses.toString());
+        notifyListeners();
+      }
+    });
+  }
+
+  addbudget({budget}) async {
+    await FirebaseFirestore.instance
+        .collection('budgets')
+        .add({"budget": budget, 'uid': AuthController().uid});
+    notifyListeners();
+  }
+
+  fetchbudget() {
+    FirebaseFirestore.instance
+        .collection('budgets')
+        .where('uid', isEqualTo: AuthController().uid)
+        .snapshots()
+        .listen((snapshot) {
+      for (var doc in snapshot.docs) {
+        logger.d(doc);
+        ExpenseDataModel bg = ExpenseDataModel.fromJson(doc.data());
+        // budgets.add(bg);
         notifyListeners();
       }
     });

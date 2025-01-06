@@ -5,7 +5,9 @@ import 'package:expensetracker/consts/assetsurl.dart';
 import 'package:expensetracker/consts/bottomsheet.dart';
 import 'package:expensetracker/consts/collerpallet.dart';
 import 'package:expensetracker/consts/datetime.dart';
+import 'package:expensetracker/consts/dialogbox.dart';
 import 'package:expensetracker/consts/typography.dart';
+import 'package:expensetracker/controllers/authCcontroller.dart';
 import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/main.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,7 @@ class _HomescreenState extends State<Homescreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  " Hello, Shreya",
+                  " Hello, ${AuthController().name}",
                   style: TextStyle(
                       fontFamily: Typo.interregular,
                       fontSize: 17.sp,
@@ -130,9 +132,14 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                   Align(
                     alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.edit_note_rounded,
-                      color: Colors.white,
+                    child: IconButton(
+                      onPressed: () {
+                        budgeteditingdialog(context);
+                      },
+                      icon: Icon(
+                        Icons.edit_note_rounded,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

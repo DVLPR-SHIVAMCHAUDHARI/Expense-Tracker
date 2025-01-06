@@ -45,14 +45,14 @@ class Profilepage extends StatelessWidget {
                     radius: 30.r,
                   ),
                   Text(
-                    "Shreya",
+                    AuthController().name,
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: Typo.interbold,
                         fontSize: 20.sp),
                   ),
                   Text(
-                    "ID: 25030024",
+                    AuthController().uid,
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: Typo.interbold,

@@ -145,23 +145,86 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-
-            Consumer<Expensecontroller>(builder: (context, controller, _) {
-              return Builder(builder: (context) {
-                return Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.expenses.length,
-                    itemBuilder: (context, index) => ListTile(
-                      title: Text("${controller.expenses[index].expense}"),
-                      leading: Text("${controller.expenses[index].amount}"),
-                      trailing: Text(
-                          "${dateTime(controller.expenses[index].expenseAdded!)}"),
-                    ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Recent Activity",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22.sp),
+                ),
+                TextButton(
+                  onPressed: () {
+                    GoRouter.of(context).goNamed(Routes.seeall.name);
+                  },
+                  child: Text(
+                    "See all",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        // fontWeight: FontWeight,
+                        fontSize: 14.sp),
                   ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 16.h,
+            ),
+
+            Consumer<Expensecontroller>(
+              builder: (context, controller, _) {
+                return Builder(
+                  builder: (
+                    context,
+                  ) {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.expenses.length,
+                        itemBuilder: (context, index) => Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    ("${controller.expenses[index].expense}"),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "${dateTime(controller.expenses[index].expenseAdded!)}",
+                                    style:
+                                        TextStyle(color: Colors.grey.shade500),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "RS ${controller.expenses[index].amount}",
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      //
+                      //
+                    );
+                  },
                 );
-              });
-            })
+              },
+            ),
           ],
         ),
       ),

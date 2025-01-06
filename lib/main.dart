@@ -6,6 +6,7 @@ import 'package:expensetracker/views/auth/loginPage.dart';
 import 'package:expensetracker/views/auth/sign_up_screen.dart';
 import 'package:expensetracker/views/homescreen.dart';
 import 'package:expensetracker/views/profilePage.dart';
+import 'package:expensetracker/views/see_all_screen.dart';
 import 'package:expensetracker/views/splashscreen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -15,7 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-enum Routes { splash, home, login, signup, forgotpass, profile }
+enum Routes { splash, home, login, signup, forgotpass, profile, seeall }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 BuildContext get appContext => navigatorKey.currentState!.context;
@@ -58,16 +59,22 @@ class Expense_Tracker extends StatelessWidget {
             ),
           ]),
       GoRoute(
-          path: "/home",
-          name: Routes.home.name,
-          builder: (context, state) => const Homescreen(),
-          routes: [
-            GoRoute(
-              path: "profile",
-              name: Routes.profile.name,
-              builder: (context, state) => const Profilepage(),
-            )
-          ]),
+        path: "/home",
+        name: Routes.home.name,
+        builder: (context, state) => const Homescreen(),
+        routes: [
+          GoRoute(
+            path: "profile",
+            name: Routes.profile.name,
+            builder: (context, state) => const Profilepage(),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: "/seeall",
+        name: Routes.seeall.name,
+        builder: (context, state) => const SeeAllScreen(),
+      ),
     ],
   );
 

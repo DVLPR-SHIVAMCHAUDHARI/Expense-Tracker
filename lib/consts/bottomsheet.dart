@@ -84,7 +84,7 @@ addExpensesform(context) {
               ),
               SizedBox(
                 height: 10.h,
-              )
+              ),
             ],
           ),
         ),

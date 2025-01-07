@@ -27,7 +27,9 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   @override
   void initState() {
-    Expensecontroller().fetchExpense();
+    Expensecontroller().expenses;
+    Expensecontroller().budgets;
+
     // TODO: implement initState
     super.initState();
   }
@@ -110,26 +112,40 @@ class _HomescreenState extends State<Homescreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Monthly Budget",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: Typo.interregular,
-                            fontSize: 15.sp),
-                      ),
-                      Text(
-                        "Rs 25,520",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: Typo.interbold,
-                            fontSize: 34.sp),
-                      ),
-                    ],
-                  ),
+                  Consumer<Expensecontroller>(
+                      builder: (context, controller, _) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Monthly Budget",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: Typo.interregular,
+                              fontSize: 15.sp),
+                        ),
+                        controller.isBudgetLoading == true
+                            ? CircularProgressIndicator()
+                            : controller.budgets == null ||
+                                    controller.budgets!.isEmpty
+                                ? Text(
+                                    "Rs 0",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: Typo.interbold,
+                                        fontSize: 34.sp),
+                                  )
+                                : Text(
+                                    "Rs ${controller.budgets![0].budget}",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: Typo.interbold,
+                                        fontSize: 34.sp),
+                                  )
+                      ],
+                    );
+                  }),
                   Align(
                     alignment: Alignment.topRight,
                     child: IconButton(

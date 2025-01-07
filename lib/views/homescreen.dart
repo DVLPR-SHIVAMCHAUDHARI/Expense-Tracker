@@ -10,6 +10,7 @@ import 'package:expensetracker/consts/typography.dart';
 import 'package:expensetracker/controllers/authCcontroller.dart';
 import 'package:expensetracker/controllers/expensecontroller.dart';
 import 'package:expensetracker/main.dart';
+import 'package:expensetracker/models/expense_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -27,11 +28,10 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   @override
   void initState() {
-    Expensecontroller().expenses;
-    Expensecontroller().budgets;
-
     // TODO: implement initState
     super.initState();
+    Expensecontroller().fetchExpense();
+    Expensecontroller().fetchbudget();
   }
 
   @override
@@ -137,7 +137,7 @@ class _HomescreenState extends State<Homescreen> {
                                         fontSize: 34.sp),
                                   )
                                 : Text(
-                                    "Rs ${controller.budgets![0].budget}",
+                                    "Rs ${controller.budgets[0].budget}",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: Typo.interbold,
@@ -203,7 +203,7 @@ class _HomescreenState extends State<Homescreen> {
                         shrinkWrap: true,
                         itemCount: controller.expenses.length,
                         itemBuilder: (context, index) => Container(
-                          margin: EdgeInsets.only(top: 15),
+                          margin: EdgeInsets.only(bottom: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

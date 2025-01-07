@@ -36,7 +36,7 @@ class Expensecontroller extends ChangeNotifier {
         .listen((snapshot) {
       expenses.clear();
       for (var doc in snapshot.docs) {
-        logger.d(doc);
+        logger.d(doc.data());
         ExpenseDataModel model = ExpenseDataModel.fromJson(doc.data());
 
         expenses.add(model);
@@ -46,7 +46,24 @@ class Expensecontroller extends ChangeNotifier {
     });
   }
 
+  // addbudget({required double budget}) async {
+  //   await FirebaseFirestore.instance.collection('budgets').add({
+  //     "budget": budget,
+  //     'uid': AuthController().uid,
+  //   });
+  //   notifyListeners(); // Notify listeners to update the UI
+  // }
+
   addbudget({budget}) async {
+    await FirebaseFirestore.instance
+        .collection('budgets')
+        .where('uid', isEqualTo: AuthController().uid)
+        .get()
+        .then((snapshot) {
+      for (var doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
     await FirebaseFirestore.instance
         .collection('budgets')
         .add({"budget": budget, 'uid': AuthController().uid});
@@ -59,12 +76,13 @@ class Expensecontroller extends ChangeNotifier {
         .where('uid', isEqualTo: AuthController().uid)
         .snapshots()
         .listen((snapshot) {
+      budgets.clear();
       for (var doc in snapshot.docs) {
-        logger.d(doc);
-        ExpenseDataModel bg = ExpenseDataModel.fromJson(doc.data());
-        // budgets.add(bg);
-        notifyListeners();
+        Budgetmodel bg = Budgetmodel.fromJson(doc.data());
+        budgets.add(bg);
       }
+      log('$budgets');
+      notifyListeners();
     });
   }
 }

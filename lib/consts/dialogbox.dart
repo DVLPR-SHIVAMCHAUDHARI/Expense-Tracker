@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 TextEditingController budgetfield = TextEditingController();
+// int budgetfield2 = 0;
 
 budgeteditingdialog(context) {
   showDialog(

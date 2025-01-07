@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:expensetracker/consts/dialogbox.dart';
 import 'package:expensetracker/controllers/authCcontroller.dart';
 import 'package:expensetracker/main.dart';
+import 'package:expensetracker/models/budgetmodel.dart';
 import 'package:expensetracker/models/expense_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class Expensecontroller extends ChangeNotifier {
   factory Expensecontroller() => instance;
 
   List<ExpenseDataModel> expenses = [];
+  List<Budgetmodel> budgets = [];
 
   addExpense({expense, amount}) async {
     await FirebaseFirestore.instance.collection('expenses').add({

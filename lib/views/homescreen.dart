@@ -202,35 +202,53 @@ class _HomescreenState extends State<Homescreen> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: controller.expenses.length,
-                        itemBuilder: (context, index) => Container(
-                          margin: EdgeInsets.only(bottom: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ("${controller.expenses[index].expense}"),
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "${dateTime(controller.expenses[index].expenseAdded!)}",
-                                    style:
-                                        TextStyle(color: Colors.grey.shade500),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "RS ${controller.expenses[index].amount}",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16.sp),
-                              ),
-                            ],
+                        itemBuilder: (context, index) => Dismissible(
+                          key: Key(controller.expenses[index].toString()),
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            alignment: Alignment.centerRight,
+                            color: Colors.red,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Text("Delete"),
+                            ),
+                          ),
+                          onDismissed: (direction) {
+                            setState(() {
+                              controller.deleteExpense(index);
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      ("${controller.expenses[index].expense}"),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "${dateTime(controller.expenses[index].expenseAdded!)}",
+                                      style: TextStyle(
+                                          color: Colors.grey.shade500),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "RS ${controller.expenses[index].amount}",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16.sp),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

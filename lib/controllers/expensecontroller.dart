@@ -37,10 +37,10 @@ class Expensecontroller extends ChangeNotifier {
       expenses.clear();
       for (var doc in snapshot.docs) {
         logger.d(doc.data());
-        ExpenseDataModel model = ExpenseDataModel.fromJson(doc.data());
+        ExpenseDataModel model = ExpenseDataModel.fromJson(doc.data(), doc.id);
 
         expenses.add(model);
-        log(expenses.toString());
+
         notifyListeners();
       }
     });
@@ -81,8 +81,20 @@ class Expensecontroller extends ChangeNotifier {
         Budgetmodel bg = Budgetmodel.fromJson(doc.data());
         budgets.add(bg);
       }
-      log('$budgets');
+
       notifyListeners();
     });
+  }
+
+  deleteExpense(index) {
+    if (index >= 0 && index < expenses.length) {
+      var expToBeDeleted = expenses[index];
+      expenses.removeAt(index);
+      FirebaseFirestore.instance
+          .collection('expenses')
+          .doc(expToBeDeleted.docid)
+          .delete();
+      notifyListeners();
+    }
   }
 }
